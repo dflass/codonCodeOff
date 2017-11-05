@@ -18,16 +18,32 @@ MainWindow::MainWindow(QWidget *parent) :
     fileDisease("../disease.csv");
     filePeople("../people.csv");
 
-    for(int i = 0; i<2; i++){
-        cout << personVect[i].name;
-        cout << "\n";
-        cout << personVect[i].allelle[0][0];
-        cout << "\n";
-        cout << personVect[i].allelle[0][1];
-        cout << "\n";
+    for(int i = 0; i<personVect.size(); i++){
+        cout << personVect[i].name << std::endl;
+        cout << personVect[i].allelle.size()<< std::endl;
+        unordered_map<string, string>::iterator it = personVect[i].allelle.begin();
+        while(it != personVect[i].allelle.end()){
+            if(diseases.find(it->first)!=diseases.end()){
+                disease temp = diseases.at(it->first);
+                 if(temp.riskAll==it->second){
+                     vector<string> hold = personVect[i].confirmDis;
+                     //Change to hash
+                     if(!std::binary_search (hold.begin(), hold.end(), temp.diseaseNameA)){
+                         personVect[i].confirmDis.push_back(temp.diseaseNameA);
+                         std::sort(personVect[i].confirmDis.begin(), personVect[i].confirmDis.end());
+                     }
 
+                 }
+            }
+            it ++;
+        }
 
+        cout << "number of diseases\n";
+        cout << personVect[i].confirmDis.size();
+        cout << "\n";
     }
+
+
 
 
 }
@@ -44,7 +60,7 @@ void MainWindow::filePeople(string a){
     int i = 0;
     getline(file,line);
 
-    while(!file.eof() && i < 2){
+    while(!file.eof()){
         getline(file,line);
         int j = line.find(",");
         name = line.substr(0,j);
@@ -80,7 +96,7 @@ void MainWindow::fileDisease(string a){
         allelel = line.substr(k+1);
         disease temp = disease(diseaseName, allelel);
         //hashmaps
-//        diseases.insert(snpID,a);
+        diseases.insert(std::make_pair(snpID,temp));
 
     }
 
