@@ -20,42 +20,57 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->webView->load(QUrl("http://codoncodeoff.forumotion.com/t2-skin-aging"));
 
+    fileDisease("../disease.csv");
+    filePeople("../people.csv");
+
+
+
 //    ui->webView->load(QUrl("public.tableau.com/profile/dave.lass3048#!/vizhome/Diseases_3/Sheet1"));
 
 //    ui->webView_2->load(QUrl("http://public.tableau.com/profile/dave.lass3048"));
 
+    string loginName = "Marie_Curie";
+    string pic = loginName+".jpg";
+    for(int i = 0; i < loginName.length(); i++){
+        if(loginName[i] == '_')
+            loginName[i] = ' ';
+    }
+    int loginPerson=0;
+    for(int i = 0; i<personName.size(); i++){
+        if(loginName==personName.at(i)){
+            loginPerson = i;
+            break;
+        }
+    }
 
-//    fileDisease("../disease.csv");
-//    filePeople("../people.csv");
+    ui->label->setText(QString::fromStdString(loginName));
+    QPixmap picture = QPixmap(QString::fromStdString(pic));
+    ui->label_pic->setPixmap(picture);
+    unordered_map<string, string>::iterator it = personVect[loginPerson].allelle.begin();
+    while(it != personVect[loginPerson].allelle.end()){
+        if(diseases.find(it->first)!=diseases.end()){
+            disease temp = diseases.at(it->first);
+             if(temp.riskAll==it->second){
+                 vector<string> hold = personVect[loginPerson].confirmDis;
+                 //Change to hash
+                 if(!std::binary_search (hold.begin(), hold.end(), temp.diseaseNameA)){
+                     personVect[loginPerson].confirmDis.push_back(temp.diseaseNameA);
+                     std::sort(personVect[loginPerson].confirmDis.begin(), personVect[loginPerson].confirmDis.end());
+                 }
 
-//    for(int i = 0; i<personVect.size(); i++){
-//        cout << personVect[i].name << std::endl;
-//        cout << personVect[i].allelle.size()<< std::endl;
-//        unordered_map<string, string>::iterator it = personVect[i].allelle.begin();
-//        while(it != personVect[i].allelle.end()){
-//            if(diseases.find(it->first)!=diseases.end()){
-//                disease temp = diseases.at(it->first);
-//                 if(temp.riskAll==it->second){
-//                     vector<string> hold = personVect[i].confirmDis;
-//                     //Change to hash
-//                     if(!std::binary_search (hold.begin(), hold.end(), temp.diseaseNameA)){
-//                         personVect[i].confirmDis.push_back(temp.diseaseNameA);
-//                         std::sort(personVect[i].confirmDis.begin(), personVect[i].confirmDis.end());
-//                     }
+             }
+        }
+        it ++;
+    }
 
-//                 }
-//            }
-//            it ++;
-//        }
+    cout << "number of diseases\n";
+    cout << personVect[loginPerson].confirmDis.size();
+    cout << "\n";
 
-//        cout << "number of diseases\n";
-//        cout << personVect[i].confirmDis.size();
-//        cout << "\n";
-//    }
 
-//    for(int i=0; i<personVect[0].confirmDis.size();i++){
-//        ui->listWidget->addItem(QString::fromStdString(personVect[0].confirmDis[i]));
-//    }
+    for(int i=0; i<personVect[loginPerson].confirmDis.size();i++){
+        ui->listWidget->addItem(QString::fromStdString(personVect[loginPerson].confirmDis[i]));
+    }
     //Shove into listView
 
 
