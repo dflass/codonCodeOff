@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "person.h"
+#include "disease.h"
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -35,7 +36,7 @@ private:
     vector<person> personVect;
     vector<string> personName;
 
-    unordered_map<string,string> diseases;
+    unordered_map<string,disease> diseases;
 };
 
 #endif // MAINWINDOW_H

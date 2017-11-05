@@ -18,7 +18,14 @@ MainWindow::MainWindow(QWidget *parent) :
     fileDisease("../disease.csv");
     filePeople("../people.csv");
 
-    for(int i = 0; i<1; i++){
+    for(int i = 0; i<2; i++){
+        cout << personVect[i].name;
+        cout << "\n";
+        cout << personVect[i].allelle[0][0];
+        cout << "\n";
+        cout << personVect[i].allelle[0][1];
+        cout << "\n";
+
 
     }
 
@@ -36,22 +43,21 @@ void MainWindow::filePeople(string a){
     file.open(a);
     int i = 0;
     getline(file,line);
-    person curPersonPoint;
+
     while(!file.eof() && i < 2){
         getline(file,line);
         int j = line.find(",");
         name = line.substr(0,j);
         int k = line.find(",",j+1);
-        snpID = line.substr(j+1,k);
+        snpID = line.substr(j+1,k-(j+1));
         allelel = line.substr(k+1);
         if(std::find(personName.begin(),personName.end(),name)!=personName.end()){
-            curPersonPoint->push(snpID,allelel);
+            personVect[i-1].push(snpID,allelel);
         }
         else{
             personName.push_back(name);
-            curPersonPoint = new person(name, snpID,allelel);
-
-            cout << (name) + "\n";
+            person temp = person(name,snpID,allelel);
+            personVect.push_back(temp);
             ui->comboBox->addItem(QString::fromStdString(name));
             i++;
         }
@@ -70,11 +76,11 @@ void MainWindow::fileDisease(string a){
         int j = line.find(",");
         diseaseName = line.substr(0,j);
         int k = line.find(",",j+1);
-        snpID = line.substr(j+1,k);
+        snpID = line.substr(j+1,k-(j+1));
         allelel = line.substr(k+1);
-
+        disease temp = disease(diseaseName, allelel);
         //hashmaps
-//        diseases.insert(snpID,allelel);
+//        diseases.insert(snpID,a);
 
     }
 

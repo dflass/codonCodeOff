@@ -8,9 +8,9 @@ using std::string;
 
 class person
 {
-person(string perName, string snpId, string all);
-public:
 
+public:
+    person(string perName, string snpId, string all);
     void push(string snpId, string all);
     string name;
     vector<vector<string> > allelle;
@@ -18,6 +18,6 @@ public:
 //signals:
 
 //public slots:
-}
+};
 
 #endif // PERSON_H
