@@ -29,6 +29,10 @@ private slots:
 
     void on_comboBox_currentTextChanged(const QString &arg1);
 
+    void on_listWidget_itemSelectionChanged();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void filePeople(string a);

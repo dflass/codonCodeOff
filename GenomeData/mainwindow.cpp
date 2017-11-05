@@ -6,6 +6,9 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <QtWebKitWidgets/QWebView>
+#include <QUrl>
+#include <QDesktopServices>
 
 using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,37 +18,44 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    fileDisease("../disease.csv");
-    filePeople("../people.csv");
+    ui->webView->load(QUrl("http://codoncodeoff.forumotion.com/t2-skin-aging"));
 
-    for(int i = 0; i<personVect.size(); i++){
-        cout << personVect[i].name << std::endl;
-        cout << personVect[i].allelle.size()<< std::endl;
-        unordered_map<string, string>::iterator it = personVect[i].allelle.begin();
-        while(it != personVect[i].allelle.end()){
-            if(diseases.find(it->first)!=diseases.end()){
-                disease temp = diseases.at(it->first);
-                 if(temp.riskAll==it->second){
-                     vector<string> hold = personVect[i].confirmDis;
-                     //Change to hash
-                     if(!std::binary_search (hold.begin(), hold.end(), temp.diseaseNameA)){
-                         personVect[i].confirmDis.push_back(temp.diseaseNameA);
-                         std::sort(personVect[i].confirmDis.begin(), personVect[i].confirmDis.end());
-                     }
+//    ui->webView->load(QUrl("public.tableau.com/profile/dave.lass3048#!/vizhome/Diseases_3/Sheet1"));
 
-                 }
-            }
-            it ++;
-        }
+//    ui->webView_2->load(QUrl("http://public.tableau.com/profile/dave.lass3048"));
 
-        cout << "number of diseases\n";
-        cout << personVect[i].confirmDis.size();
-        cout << "\n";
-    }
 
-    for(int i=0; i<personVect[0].confirmDis.size();i++){
-        ui->listWidget->addItem(QString::fromStdString(personVect[0].confirmDis[i]));
-    }
+//    fileDisease("../disease.csv");
+//    filePeople("../people.csv");
+
+//    for(int i = 0; i<personVect.size(); i++){
+//        cout << personVect[i].name << std::endl;
+//        cout << personVect[i].allelle.size()<< std::endl;
+//        unordered_map<string, string>::iterator it = personVect[i].allelle.begin();
+//        while(it != personVect[i].allelle.end()){
+//            if(diseases.find(it->first)!=diseases.end()){
+//                disease temp = diseases.at(it->first);
+//                 if(temp.riskAll==it->second){
+//                     vector<string> hold = personVect[i].confirmDis;
+//                     //Change to hash
+//                     if(!std::binary_search (hold.begin(), hold.end(), temp.diseaseNameA)){
+//                         personVect[i].confirmDis.push_back(temp.diseaseNameA);
+//                         std::sort(personVect[i].confirmDis.begin(), personVect[i].confirmDis.end());
+//                     }
+
+//                 }
+//            }
+//            it ++;
+//        }
+
+//        cout << "number of diseases\n";
+//        cout << personVect[i].confirmDis.size();
+//        cout << "\n";
+//    }
+
+//    for(int i=0; i<personVect[0].confirmDis.size();i++){
+//        ui->listWidget->addItem(QString::fromStdString(personVect[0].confirmDis[i]));
+//    }
     //Shove into listView
 
 
@@ -110,4 +120,14 @@ void MainWindow::fileDisease(string a){
 void MainWindow::on_comboBox_currentTextChanged(const QString &arg1)
 {
 
+}
+
+void MainWindow::on_listWidget_itemSelectionChanged()
+{
+
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://public.tableau.com/profile/dave.lass3048#!/vizhome/Diseases_3/Sheet1"));
 }
