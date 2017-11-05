@@ -43,6 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
         cout << "\n";
     }
 
+    for(int i=0; i<personVect[0].confirmDis.size();i++){
+        ui->listWidget->addItem(QString::fromStdString(personVect[0].confirmDis[i]));
+    }
+    //Shove into listView
 
 
 
